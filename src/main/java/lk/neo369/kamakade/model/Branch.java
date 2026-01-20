@@ -1,8 +1,6 @@
 package lk.neo369.kamakade.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import lk.neo369.kamakade.enums.RestaurantStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,33 +8,41 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "restaurants")
-public class Restaurant {
+@Table(name = "branches")
+public class Branch {
 
     @Id
-    @Column(name = "restaurant_id")
-    private String restaurantId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
 
-    @Column(unique = true)
-    @Email(message = "Invalid email address")
-    private String email;
+    @Column(name = "address_line_1")
+    private String addressLine1;
 
-    @Enumerated(EnumType.STRING)
-    private RestaurantStatus status;
+    @Column(name = "address_line_2")
+    private String addressLine2;
+
+    private String city;
+
+    private String state;
+
+    private String country;
+
+    @Column(name = "postal_code")
+    private String postalCode;
 
     @Column(name = "contact_number")
     private String contactNumber;
 
-    @OneToMany(mappedBy = "restaurant")
-    private List<Branch> branches;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -48,6 +54,8 @@ public class Restaurant {
 
     @Version
     private int version;
+
+
 
 
 }
