@@ -1,44 +1,51 @@
 package lk.neo369.kamakade.model;
 
 import jakarta.persistence.*;
-import lk.neo369.kamakade.enums.AvailabilityStatus;
+import lk.neo369.kamakade.enums.AddOns;
+import lk.neo369.kamakade.enums.PortionSize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.Instant;
-
+import java.util.List;
 
 @Entity
-@Table(name = "menu_items")
+@Table(name = "item_variants")
 @Getter
 @Setter
 @NoArgsConstructor
-public class MenuItem {
+public class ItemVariant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "menu_item_no")
-    private String menuItemNo;
+    @Column(name = "item_variant_code", unique = true)
+    private String itemVariantCode;
 
-    @Column(name = "item_name")
-    private String itemName;
-
-    @Column(name = "image_url")
-    private String imageURL;
+    private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "availability")
-    private AvailabilityStatus availabilityStatus;
+    @Column(name = "portion_size")
+    private PortionSize portionSize;
+
+    private BigDecimal price;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "add_ons")
+    private List<AddOns> addOnsList;
+
+    @Column(name = "prepare_time_minutes")
+    private Integer prepTimeMinutes;
 
 
     @ManyToOne
-    @JoinColumn(name = "menu_category")
-    private MenuCategory menuCategory;
+    @JoinColumn(name = "menu_item_id")
+    private MenuItem menuItem;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
@@ -55,4 +62,8 @@ public class MenuItem {
 
     @Version
     private int version;
+
+
+
+
 }
