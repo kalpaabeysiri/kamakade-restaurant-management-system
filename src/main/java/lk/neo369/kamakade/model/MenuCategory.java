@@ -10,46 +10,27 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 import java.util.List;
 
+@Entity
+@Table(name = "menu_categories")
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
-@Table(name = "branches")
-public class Branch {
+public class MenuCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "branch_no", unique = true)
-    private Long branchNo;
+    @Column(name = "menu_category_no", unique = true)
+    private String menuCategoryNo;
 
     private String name;
 
-    @Column(name = "address_line_1")
-    private String addressLine1;
-
-    @Column(name = "address_line_2")
-    private String addressLine2;
-
-    private String city;
-
-    private String state;
-
-    private String country;
-
-    @Column(name = "postal_code")
-    private String postalCode;
-
-    @Column(name = "contact_number")
-    private String contactNumber;
+    private String imageURL;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
-
-    @OneToMany(mappedBy = "branch")
-    private List<User> users;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -61,7 +42,6 @@ public class Branch {
 
     @Version
     private int version;
-
 
 
 

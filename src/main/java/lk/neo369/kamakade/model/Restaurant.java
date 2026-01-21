@@ -21,7 +21,10 @@ public class Restaurant {
 
     @Id
     @Column(name = "restaurant_id")
-    private String restaurantId;
+    private Long restaurantId;
+
+    @Column(name = "restaurant_no" , unique = true)
+    private String restaurantNo;
 
     private String name;
 
@@ -41,6 +44,7 @@ public class Restaurant {
     @CreationTimestamp
     @Column(name = "created_at")
     private Instant createdAt;
+
 
     @UpdateTimestamp
     @Column(name = "updated_at")
